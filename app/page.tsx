@@ -212,7 +212,7 @@ const TechMarquee = () => {
       <motion.div
         animate={{ x: [0, -1500] }}
         transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-        className="flex whitespace-nowrap gap-12 text-6xl md:text-8xl font-black text-gray-100 uppercase italic tracking-tighter"
+        className="flex whitespace-nowrap gap-12 text-4xl md:text-8xl font-black text-gray-100 uppercase italic tracking-tighter"
       >
         <span>there is also a way to start again • there is also a way to start again • there is also a way to start again • there is also a way to start again</span>
       </motion.div>
@@ -276,8 +276,8 @@ export default function Home() {
 
       {/* NAV */}
       <nav className="fixed top-0 w-full bg-white/40 backdrop-blur-2xl border-b border-gray-100 z-50">
-        <div className="max-w-7xl mx-auto flex justify-center items-center px-6 py-7">
-          <div className="flex space-x-16 text-xs font-black uppercase tracking-[0.4em] text-gray-500">
+        <div className="max-w-7xl mx-auto flex justify-center items-center px-6 py-4 md:py-7">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 md:space-x-16 text-[10px] md:text-xs font-black uppercase tracking-widest md:tracking-[0.4em] text-gray-500">
             <a href="#about" className="hover:text-purple-600 transition-colors">About</a>
             <a href="#projects" className="hover:text-purple-600 transition-colors">Projects</a>
             <a href="#experience" className="hover:text-purple-600 transition-colors">Experience</a>
@@ -288,13 +288,13 @@ export default function Home() {
       </nav>
 
       {/* HERO */}
-      <section className="min-h-screen flex items-center pt-24 px-6 relative">
-        <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-20 items-center">
+      <section className="min-h-screen flex items-center pt-32 pb-16 md:pt-24 px-6 relative">
+        <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-10 md:gap-20 items-center">
           <motion.div
             initial={{ opacity: 0, x: -60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as any }}
-            className="space-y-12"
+            className="space-y-8 md:space-y-12"
           >
             <div className="space-y-6">
               <motion.div
@@ -305,13 +305,13 @@ export default function Home() {
               >
                 Full-Stack Developer
               </motion.div>
-              <h1 className="text-7xl md:text-9xl font-black leading-[0.85] tracking-tighter">
+              <h1 className="text-5xl md:text-7xl lg:text-9xl font-black leading-[0.85] tracking-tighter">
                 Crafting <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-800">Software</span>
               </h1>
             </div>
 
-            <p className="text-2xl text-gray-400 leading-relaxed max-w-xl font-medium">
+            <p className="text-xl md:text-2xl text-gray-400 leading-relaxed max-w-xl font-medium">
               Empowering brands with <span className="text-gray-900">Next.js</span>,
               <span className="text-gray-900"> secure APIs</span>, and
               <span className="text-gray-900"> high-performance</span> architectures.
@@ -343,7 +343,7 @@ export default function Home() {
             className="flex justify-center relative"
           >
             <div className="absolute -inset-10 bg-gradient-to-tr from-purple-100 to-indigo-100 rounded-full blur-[100px] -z-10 opacity-60" />
-            <div className="relative w-80 h-[30rem] md:w-full md:max-w-md md:h-[35rem] rounded-[3rem] overflow-hidden shadow-[0_48px_80px_-16px_rgba(0,0,0,0.12)] border-[16px] border-white group bg-gray-50">
+            <div className="relative w-full max-w-[18rem] md:max-w-md h-[25rem] md:h-[35rem] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_48px_80px_-16px_rgba(0,0,0,0.12)] border-[12px] md:border-[16px] border-white group bg-gray-50">
               <Image
                 src="/profile.jpg"
                 alt="Fatima Hodroj"
@@ -362,11 +362,11 @@ export default function Home() {
       <TechMarquee />
 
       {/* PROJECTS */}
-      <section id="projects" className="py-48">
+      <section id="projects" className="py-24 md:py-48">
         <div className="max-w-7xl mx-auto px-6">
-          <motion.div {...fadeInUp} className="mb-24">
+          <motion.div {...fadeInUp} className="mb-16 md:mb-24">
             <h2 className="text-xs font-black uppercase tracking-[0.5em] text-purple-600 mb-6">Portfolio</h2>
-            <h3 className="text-5xl md:text-7xl font-black tracking-tighter">Selected Projects</h3>
+            <h3 className="text-4xl md:text-7xl font-black tracking-tighter">Selected Projects</h3>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -375,13 +375,13 @@ export default function Home() {
                 key={`project-${p.name}-${i}`}
                 {...fadeInUp}
                 transition={{ delay: i * 0.1 }}
-                className="group relative bg-white p-10 rounded-[3rem] border border-gray-50 hover:border-purple-100 hover:shadow-[0_40px_80px_-20px_rgba(124,58,237,0.1)] transition-all duration-700"
+                className="group relative bg-white p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] border border-gray-50 hover:border-purple-100 hover:shadow-[0_40px_80px_-20px_rgba(124,58,237,0.1)] transition-all duration-700"
               >
-                <div className="absolute top-10 right-10 w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors duration-500">
+                <div className="absolute top-8 right-8 w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gray-50 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors duration-500">
                   <span className="text-xl">↗</span>
                 </div>
-                <h3 className="text-3xl font-black mb-6 mt-4 group-hover:text-purple-600 transition-colors duration-500">{p.name}</h3>
-                <p className="text-gray-400 text-lg leading-relaxed mb-12 font-medium">{p.description}</p>
+                <h3 className="text-2xl md:text-3xl font-black mb-6 mt-4 group-hover:text-purple-600 transition-colors duration-500">{p.name}</h3>
+                <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-12 font-medium">{p.description}</p>
 
                 <div className="flex flex-wrap gap-2 mt-auto">
                   {p.tags?.map((tag, tagIdx) => (
@@ -397,31 +397,31 @@ export default function Home() {
       </section>
 
       {/* SKILLS */}
-      <section id="skills" className="py-48 bg-gray-950 text-white rounded-[5rem] mx-6 md:mx-12 overflow-hidden relative shadow-2xl">
+      <section id="skills" className="py-24 md:py-48 bg-gray-950 text-white rounded-[3rem] md:rounded-[5rem] mx-4 md:mx-12 overflow-hidden relative shadow-2xl">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-purple-600/20 via-transparent to-transparent pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-12 relative z-10">
-          <motion.div {...fadeInUp} className="mb-32">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+          <motion.div {...fadeInUp} className="mb-20 md:mb-32">
             <h2 className="text-xs font-black uppercase tracking-[0.5em] text-purple-400 mb-8">Capabilities</h2>
-            <h3 className="text-6xl md:text-8xl font-black tracking-tighter">Tech Stack</h3>
+            <h3 className="text-4xl md:text-8xl font-black tracking-tighter">Tech Stack</h3>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 md:gap-16">
             {Object.entries(skills).map(([category, items], idx) => (
               <motion.div
                 key={`skill-cat-${category}`}
                 {...fadeInUp}
                 transition={{ delay: idx * 0.1 }}
-                className="space-y-10"
+                className="space-y-6 md:space-y-10"
               >
                 <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-600">{category}</h3>
-                <div className="space-y-5">
+                <div className="space-y-3 md:space-y-5">
                   {items.map(skill => (
                     <motion.div
                       key={`${category}-${skill}`}
                       whileHover={{ x: 8 }}
-                      className="text-xl font-bold text-gray-400 hover:text-white transition duration-500 flex items-center gap-4 group"
+                      className="text-lg md:text-xl font-bold text-gray-400 hover:text-white transition duration-500 flex items-center gap-4 group"
                     >
-                      <div className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_12px_rgba(168,85,247,0.6)] group-hover:scale-150 transition-transform" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-purple-600 shadow-[0_0_12px_rgba(168,85,247,0.6)] group-hover:scale-150 transition-transform" />
                       {skill}
                     </motion.div>
                   ))}
@@ -433,11 +433,11 @@ export default function Home() {
       </section>
 
       {/* EXPERIENCE */}
-      <section id="experience" className="py-48">
+      <section id="experience" className="py-24 md:py-48">
         <div className="max-w-5xl mx-auto px-6">
-          <motion.div {...fadeInUp} className="mb-32 text-center">
+          <motion.div {...fadeInUp} className="mb-20 md:mb-32 text-center">
             <h2 className="text-xs font-black uppercase tracking-[0.5em] text-purple-600 mb-8">Career</h2>
-            <h3 className="text-5xl md:text-7xl font-black tracking-tight">Experience</h3>
+            <h3 className="text-4xl md:text-7xl font-black tracking-tight">Experience</h3>
           </motion.div>
 
           <div className="space-y-10">
@@ -446,20 +446,20 @@ export default function Home() {
                 key={`exp-${e.company}-${e.title}-${i}`}
                 {...fadeInUp}
                 transition={{ delay: i * 0.1 }}
-                className="group relative grid md:grid-cols-[1.2fr_2fr] gap-12 p-16 bg-white rounded-[4rem] border border-gray-50 hover:border-purple-100 hover:shadow-[0_60px_100px_-30px_rgba(124,58,237,0.12)] transition-all duration-700"
+                className="group relative grid md:grid-cols-[1.2fr_2fr] gap-8 md:gap-12 p-8 md:p-16 bg-white rounded-[2.5rem] md:rounded-[4rem] border border-gray-50 hover:border-purple-100 hover:shadow-[0_60px_100px_-30px_rgba(124,58,237,0.12)] transition-all duration-700"
               >
                 <div className="space-y-4">
                   <span className="text-xs font-black text-purple-600 uppercase tracking-widest">{e.period}</span>
-                  <h3 className="text-3xl font-black group-hover:text-purple-600 transition-colors duration-500">{e.company}</h3>
+                  <h3 className="text-2xl md:text-3xl font-black group-hover:text-purple-600 transition-colors duration-500">{e.company}</h3>
                   <div className="inline-flex items-center px-3 py-1 bg-gray-50 text-[10px] font-black uppercase tracking-widest text-gray-400 rounded-lg">{e.location}</div>
                 </div>
                 <div className="space-y-6">
-                  <h4 className="text-2xl font-black group-hover:translate-x-2 transition-transform duration-500">{e.title}</h4>
-                  <p className="text-gray-400 text-lg leading-relaxed font-medium">{e.description}</p>
+                  <h4 className="text-xl md:text-2xl font-black group-hover:translate-x-2 transition-transform duration-500">{e.title}</h4>
+                  <p className="text-gray-400 text-base md:text-lg leading-relaxed font-medium">{e.description}</p>
                   {e.points && (
-                    <ul className="list-disc list-inside space-y-1">
+                    <ul className="list-disc list-inside space-y-2">
                       {e.points.map((p: string, idx: number) => (
-                        <li key={`point-${i}-${idx}`} className="text-gray-600 font-medium leading-relaxed indent-[-1.5rem] pl-6 text-sm">
+                        <li key={`point-${i}-${idx}`} className="text-gray-600 font-medium leading-relaxed indent-[-1.5rem] pl-6 text-xs md:text-sm">
                           {p}
                         </li>
                       ))}
@@ -473,42 +473,42 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="py-48 px-6">
+      <section id="contact" className="py-24 md:py-48 px-4 md:px-6">
         <motion.div
           {...fadeInUp}
-          className="max-w-6xl mx-auto p-16 md:p-32 bg-gray-950 rounded-[5rem] text-white text-center relative overflow-hidden shadow-2xl"
+          className="max-w-6xl mx-auto p-10 md:p-32 bg-gray-950 rounded-[3rem] md:rounded-[5rem] text-white text-center relative overflow-hidden shadow-2xl"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-indigo-600/10 to-transparent pointer-events-none" />
           <motion.h2
             initial={{ y: 40, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
-            className="text-5xl md:text-8xl font-black mb-16 italic tracking-tighter leading-none"
+            className="text-4xl md:text-8xl font-black mb-12 md:mb-16 italic tracking-tighter leading-none"
           >
             LET'S BUILD <br />
             BEYOND LIMITS.
           </motion.h2>
 
-          <div className="flex flex-col md:flex-row justify-center items-center gap-12 relative z-10">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-12 relative z-10">
             <motion.a
               whileHover={{ scale: 1.05, y: -6 }}
               whileTap={{ scale: 0.95 }}
               href="mailto:fatimahodroj1@outlook.com"
-              className="px-16 py-8 bg-purple-600 text-white rounded-[2.5rem] font-black text-xl tracking-widest hover:bg-purple-700 transition shadow-[0_24px_48px_-12px_rgba(124,58,237,0.4)]"
+              className="px-12 py-6 md:px-16 md:py-8 bg-purple-600 text-white rounded-[2rem] md:rounded-[2.5rem] font-black text-lg md:text-xl tracking-widest hover:bg-purple-700 transition shadow-[0_24px_48px_-12px_rgba(124,58,237,0.4)]"
             >
               CONTACT ME
             </motion.a>
-            <div className="flex gap-12">
-              <a href="https://linkedin.com/in/fatima-hodroj" target="_blank" className="font-black text-xs tracking-[0.3em] text-gray-500 hover:text-white transition border-b-2 border-gray-800 hover:border-white pb-2">LINKEDIN</a>
-              <a href="https://github.com/fatimahodrojj" target="_blank" className="font-black text-xs tracking-[0.3em] text-gray-500 hover:text-white transition border-b-2 border-gray-800 hover:border-white pb-2">GITHUB</a>
+            <div className="flex gap-8 md:gap-12">
+              <a href="https://linkedin.com/in/fatima-hodroj" target="_blank" className="font-black text-[10px] md:text-xs tracking-[0.3em] text-gray-500 hover:text-white transition border-b-2 border-gray-800 hover:border-white pb-2">LINKEDIN</a>
+              <a href="https://github.com/fatimahodrojj" target="_blank" className="font-black text-[10px] md:text-xs tracking-[0.3em] text-gray-500 hover:text-white transition border-b-2 border-gray-800 hover:border-white pb-2">GITHUB</a>
             </div>
           </div>
         </motion.div>
       </section>
 
       {/* FOOTER */}
-      <footer className="py-24 text-center">
-        <p className="text-gray-300 text-[10px] font-black uppercase tracking-[0.6em]">
+      <footer className="py-16 md:py-24 text-center">
+        <p className="text-gray-300 text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.6em] px-4">
           © {new Date().getFullYear()} FATIMA HODROJ • DESIGNED WITH PASSION
         </p>
       </footer>
