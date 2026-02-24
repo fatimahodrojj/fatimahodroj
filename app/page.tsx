@@ -100,55 +100,87 @@ const fadeInUp = {
   transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any },
 };
 
-const ShootingStar = ({ delay = 0 }) => {
+const staggerContainer = {
+  initial: {},
+  whileInView: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+  viewport: { once: true },
+};
+
+const ShootingStar = ({ delay = 0, color = "purple" }) => {
+  const colors = {
+    purple: "bg-purple-500 shadow-[0_0_20px_4px_rgba(168,85,247,0.6)]",
+    indigo: "bg-indigo-500 shadow-[0_0_20px_4px_rgba(99,102,241,0.6)]",
+    white: "bg-white shadow-[0_0_20px_4px_rgba(255,255,255,0.6)]",
+  };
+
+  const startPositions = [
+    { top: "-10%", left: "110%" },
+    { top: "-10%", left: "50%" },
+    { top: "50%", left: "110%" },
+  ];
+  const startPos = startPositions[Math.floor(Math.random() * startPositions.length)];
+
   return (
     <motion.div
-      initial={{ top: "-10%", left: "110%", opacity: 0 }}
+      initial={{ top: startPos.top, left: startPos.left, opacity: 0 }}
       animate={{
         top: ["-10%", "110%"],
         left: ["110%", "-10%"],
         opacity: [0, 1, 1, 0]
       }}
       transition={{
-        duration: 2,
+        duration: Math.random() * 2 + 1,
         delay: delay,
         repeat: Infinity,
-        repeatDelay: Math.random() * 10 + 5,
+        repeatDelay: Math.random() * 15 + 10,
         ease: "linear"
       }}
-      className="absolute w-[3px] h-[3px] bg-purple-500 rounded-full shadow-[0_0_20px_4px_rgba(168,85,247,0.6)]"
+      className={`absolute w-[3px] h-[3px] rounded-full ${colors[color as keyof typeof colors]}`}
     >
-      <div className="absolute top-0 left-0 w-[150px] h-[3px] bg-gradient-to-r from-purple-500 to-transparent -rotate-45 origin-left" />
+      <div className={`absolute top-0 left-0 w-[150px] h-[3px] bg-gradient-to-r from-current to-transparent -rotate-45 origin-left`} />
     </motion.div>
   );
 };
 
 const BackgroundElements = () => {
+  const { scrollYProgress } = useScroll();
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [0, -150]);
+
   return (
     <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden bg-[radial-gradient(circle_at_50%_50%,#f5f3ff_0%,#ffffff_100%)]">
-
       {/* Redesigned Shooting Stars */}
-      <ShootingStar delay={2} />
-      <ShootingStar delay={7} />
-      <ShootingStar delay={12} />
-      <ShootingStar delay={15} />
+      <ShootingStar delay={2} color="purple" />
+      <ShootingStar delay={7} color="indigo" />
+      <ShootingStar delay={12} color="white" />
+      <ShootingStar delay={4} color="purple" />
+      <ShootingStar delay={9} color="indigo" />
+      <ShootingStar delay={15} color="white" />
 
-      {/* Floating Emojis */}
+      {/* Floating Emojis with Parallax */}
       <motion.div
-        animate={{ y: [0, -40, 0], x: [0, 20, 0], rotate: [0, 10, 0] }}
+        style={{ y: y1 }}
+        animate={{ x: [0, 20, 0], rotate: [0, 10, 0] }}
         transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
         className="absolute top-[15%] left-[5%] text-[10rem] md:text-[14rem] opacity-[0.03] select-none"
       >
         💻
       </motion.div>
       <motion.div
-        animate={{ y: [0, 50, 0], x: [0, -30, 0], rotate: [0, -15, 0] }}
+        style={{ y: y2 }}
+        animate={{ x: [0, -30, 0], rotate: [0, -15, 0] }}
         transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
         className="absolute bottom-[20%] right-[10%] text-[12rem] md:text-[16rem] opacity-[0.03] select-none"
       >
         🚀
       </motion.div>
       <motion.div
+        style={{ y: y3 }}
         animate={{ scale: [1, 1.1, 1], rotate: [0, 360] }}
         transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] md:text-[20rem] opacity-[0.02] select-none"
@@ -203,6 +235,63 @@ const MagneticButton = ({ children, className, href }: { children: React.ReactNo
     >
       {children}
     </motion.a>
+  );
+};
+
+const CursorFollower = () => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const cursorSize = useMotionValue(20);
+  const springX = useSpring(mouseX, { stiffness: 500, damping: 28 });
+  const springY = useSpring(mouseY, { stiffness: 500, damping: 28 });
+  const springSize = useSpring(cursorSize, { stiffness: 500, damping: 28 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+
+      const target = e.target as HTMLElement;
+      if (target.closest('a') || target.closest('button')) {
+        cursorSize.set(60);
+      } else {
+        cursorSize.set(20);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  return (
+    <motion.div
+      className="fixed top-0 left-0 w-5 h-5 border-2 border-purple-500 rounded-full pointer-events-none z-[9999] hidden md:block"
+      style={{
+        x: springX,
+        y: springY,
+        width: springSize,
+        height: springSize,
+        translateX: "-50%",
+        translateY: "-50%",
+        boxShadow: "0 0 20px rgba(168, 85, 247, 0.3)",
+      }}
+    />
+  );
+};
+
+const ScrollProgress = () => {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  return (
+    <motion.div
+      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 to-indigo-600 origin-left z-[100]"
+      style={{ scaleX }}
+    />
   );
 };
 
@@ -268,10 +357,23 @@ function build(future) {
 
 export default function Home() {
   const containerRef = useRef(null);
-  const [imgSrc, setImgSrc] = useState("/profile.jpg");
+
+  // Hero Title Animation Variants
+  const softwareGradient = {
+    animate: {
+      backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+    },
+    transition: {
+      duration: 5,
+      repeat: Infinity,
+      ease: "linear",
+    },
+  };
 
   return (
     <main ref={containerRef} className="bg-white text-gray-900 scroll-smooth selection:bg-purple-100 selection:text-purple-600">
+      <ScrollProgress />
+      <CursorFollower />
       <BackgroundElements />
 
       {/* NAV */}
@@ -307,7 +409,13 @@ export default function Home() {
               </motion.div>
               <h1 className="text-5xl md:text-7xl lg:text-9xl font-black leading-[0.85] tracking-tighter">
                 Crafting <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-800">Software</span>
+                <motion.span
+                  {...softwareGradient}
+                  style={{ backgroundSize: "200% 200%" }}
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-800"
+                >
+                  Software
+                </motion.span>
               </h1>
             </div>
 
@@ -369,12 +477,17 @@ export default function Home() {
             <h3 className="text-4xl md:text-7xl font-black tracking-tighter">Selected Projects</h3>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <motion.div
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-10"
+          >
             {projects.map((p, i) => (
               <motion.div
                 key={`project-${p.name}-${i}`}
-                {...fadeInUp}
-                transition={{ delay: i * 0.1 }}
+                variants={fadeInUp}
                 className="group relative bg-white p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] border border-gray-50 hover:border-purple-100 hover:shadow-[0_40px_80px_-20px_rgba(124,58,237,0.1)] transition-all duration-700"
               >
                 <div className="absolute top-8 right-8 w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gray-50 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors duration-500">
@@ -392,7 +505,7 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -405,12 +518,17 @@ export default function Home() {
             <h3 className="text-4xl md:text-8xl font-black tracking-tighter">Tech Stack</h3>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 md:gap-16">
+          <motion.div
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 md:gap-16"
+          >
             {Object.entries(skills).map(([category, items], idx) => (
               <motion.div
                 key={`skill-cat-${category}`}
-                {...fadeInUp}
-                transition={{ delay: idx * 0.1 }}
+                variants={fadeInUp}
                 className="space-y-6 md:space-y-10"
               >
                 <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-600">{category}</h3>
@@ -428,7 +546,7 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -440,12 +558,17 @@ export default function Home() {
             <h3 className="text-4xl md:text-7xl font-black tracking-tight">Experience</h3>
           </motion.div>
 
-          <div className="space-y-10">
+          <motion.div
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            className="space-y-10"
+          >
             {experiences.map((e, i) => (
               <motion.div
                 key={`exp-${e.company}-${e.title}-${i}`}
-                {...fadeInUp}
-                transition={{ delay: i * 0.1 }}
+                variants={fadeInUp}
                 className="group relative grid md:grid-cols-[1.2fr_2fr] gap-8 md:gap-12 p-8 md:p-16 bg-white rounded-[2.5rem] md:rounded-[4rem] border border-gray-50 hover:border-purple-100 hover:shadow-[0_60px_100px_-30px_rgba(124,58,237,0.12)] transition-all duration-700"
               >
                 <div className="space-y-4">
@@ -468,7 +591,7 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
